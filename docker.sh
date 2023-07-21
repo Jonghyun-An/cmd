@@ -51,8 +51,8 @@ case "$1" in
             --name ${DOCKER_NAME} \
             --gpus '"device=0,1"' \
             --shm-size 4G \
-            --volume "${WORKSPACE_DIR}:${WORKSPACE_DIR}" \
-            --workdir="${WORKSPACE_DIR}" \
+            --volume "${WORKSPACE_DIR_SRC}:${WORKSPACE_DIR_DST}" \
+            --workdir="${WORKSPACE_DIR_DST}" \
             ${IMAGE_NAME}
         ;;
     *)

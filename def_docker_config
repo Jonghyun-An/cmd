@@ -19,7 +19,8 @@ function findWorkspace() {
     echo ${ret_ws_dir}
 }
 
-WORKSPACE_DIR=$(findWorkspace)
+WORKSPACE_DIR_SRC=$(findWorkspace)
+WORKSPACE_DIR_DST="/root/ws"
 
 # docker config
 DOCKER_NAME=${USER_NAME}
