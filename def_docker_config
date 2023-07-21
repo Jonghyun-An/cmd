@@ -1,0 +1,34 @@
+CURRENT_DIR=$(dirname $(realpath $0))
+
+# global variable
+USER_NAME="jonghyun"
+WORKSPACE_DIR_LISTS=(
+    "$(echo ~)/${USER_NAME}/ws"
+    "/media/storage/${USER_NAME}/ws"
+)
+function findWorkspace() {
+    ret_ws_dir=""
+    
+    for ((i=0; i<${#WORKSPACE_DIR_LISTS[@]}; i++)); do
+        ws_dir=${WORKSPACE_DIR_LISTS[$i]}
+        if [[ ! -L "$ws_dir" && -d "$ws_dir" ]]; then
+            ret_ws_dir=${ws_dir}
+        fi
+    done
+
+    echo ${ret_ws_dir}
+}
+
+WORKSPACE_DIR=$(findWorkspace)
+
+# docker config
+DOCKER_NAME=${USER_NAME}
+WS_NAME="${DOCKER_NAME}/prml"
+IMAGE_NAME="${WS_NAME}:1.13.1-cuda11.6"
+
+CONTAINER_ID=`docker ps -a -q --filter="name=${DOCKER_NAME}"`
+
+# docker hub config
+DOCKER_HUB_ID="markajh"
+DOCKER_HUB_WS_NAME=${WS_NAME//$DOCKER_NAME/$DOCKER_HUB_ID}
+DOCKER_HUB_IMAGE_NAME=${IMAGE_NAME//$DOCKER_NAME/$DOCKER_HUB_ID}
