@@ -2,7 +2,7 @@
 
 source $(dirname $(realpath $0))/def_docker_config
 
-if [ $# != 1 ]; then
+if ! (( $# >= 1 && $# <= 2 )); then
     echo "Input docker command"
     echo "  ex) $0 ps"
     exit 1
@@ -34,7 +34,13 @@ case "$1" in
         docker exec -it ${CONTAINER_ID} /bin/bash
         ;;
     "commit")
-        docker commit ${CONTAINER_ID} ${IMAGE_NAME}
+        if [[ "$2" != "" ]]; then
+            add_option="-m \"$2\""
+        else
+            add_option=""
+        fi
+
+        docker commit "${add_option}" ${CONTAINER_ID} ${IMAGE_NAME}
         ;;
     "push")
         docker login
