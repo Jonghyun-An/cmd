@@ -55,7 +55,7 @@ case "$1" in
         docker run \
             -it \
             --name ${DOCKER_NAME} \
-            --gpus '"device=0,1"' \
+            --gpus '"device=all"' \
             --shm-size 4G \
             --volume "${WORKSPACE_DIR_SRC}:${WORKSPACE_DIR_DST}" \
             --workdir="${WORKSPACE_DIR_DST}" \
