@@ -59,6 +59,7 @@ case "$1" in
             --shm-size 4G \
             --volume "${WORKSPACE_DIR_SRC}:${WORKSPACE_DIR_DST}" \
             --workdir="${WORKSPACE_DIR_DST}" \
+            -p 18888:8888/tcp \
             ${IMAGE_NAME}
         ;;
     *)

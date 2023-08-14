@@ -17,7 +17,7 @@ case "$1" in
         ${NGROK} tcp 22 ${options}
         ;;
     "lab")
-        ${NGROK} http 8888 --host-header="localhost:8888" ${options}
+        ${NGROK} http 18888 --host-header="localhost:8888" ${options} # docker port forwarding 18888->8888
         ;;
     *)
         echo "'$1' is invalid command"
