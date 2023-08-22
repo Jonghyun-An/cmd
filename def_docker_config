@@ -1,26 +1,36 @@
 CURRENT_DIR=$(dirname $(realpath $0))
 
+# global function
+function find_dir() {
+    dir_lists="$1"
+    ret_dir=""
+
+    for ((i=0; i<${#dir_lists[@]}; i++)); do
+        cur_dir=${dir_lists[$i]}
+        if [[ ! -L "$cur_dir" && -d "$cur_dir" ]]; then
+            ret_dir=${cur_dir}
+        fi
+    done
+
+    echo ${ret_dir}
+}
+
 # global variable
 USER_NAME="jonghyun"
+
 WORKSPACE_DIR_LISTS=(
     "$(echo ~)/${USER_NAME}/ws"
     "/media/storage/${USER_NAME}/ws"
 )
-function findWorkspace() {
-    ret_ws_dir=""
-    
-    for ((i=0; i<${#WORKSPACE_DIR_LISTS[@]}; i++)); do
-        ws_dir=${WORKSPACE_DIR_LISTS[$i]}
-        if [[ ! -L "$ws_dir" && -d "$ws_dir" ]]; then
-            ret_ws_dir=${ws_dir}
-        fi
-    done
-
-    echo ${ret_ws_dir}
-}
-
-WORKSPACE_DIR_SRC=$(findWorkspace)
+WORKSPACE_DIR_SRC=$(find_dir "${WORKSPACE_DIR_LISTS[@]}")
 WORKSPACE_DIR_DST="/root/ws"
+
+DATASETS_DIR_LISTS=(
+    "$(echo ~)/datasets"
+    "/media/storage/datasets"
+)
+DATASETS_DIR_SRC=$(find_dir "${DATASETS_DIR_LISTS[@]}")
+DATASETS_DIR_DST="/root/datasets"
 
 # docker config
 DOCKER_NAME=${USER_NAME}

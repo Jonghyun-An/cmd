@@ -57,6 +57,7 @@ case "$1" in
             --name ${DOCKER_NAME} \
             --gpus '"device=all"' \
             --shm-size 4G \
+            --volume "${DATASETS_DIR_SRC}:${DATASETS_DIR_DST}" \
             --volume "${WORKSPACE_DIR_SRC}:${WORKSPACE_DIR_DST}" \
             --workdir="${WORKSPACE_DIR_DST}" \
             -p 18888:8888/tcp \
